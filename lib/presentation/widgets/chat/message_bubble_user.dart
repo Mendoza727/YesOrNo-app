@@ -1,8 +1,11 @@
+import 'package:chat/domain/entities/message.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class MessageBubbleUser extends StatelessWidget {
-  const MessageBubbleUser({super.key});
+  final Message message;
+
+  const MessageBubbleUser({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -14,17 +17,23 @@ class MessageBubbleUser extends StatelessWidget {
             color: color.secondary, borderRadius: BorderRadius.circular(20)),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text('hola mundo', style: TextStyle(color: Colors.white)),
+          child: Text(message.text, style: TextStyle(color: Colors.white)),
         ),
       ),
       SizedBox(height: 5),
-      _ImageBubble(),
+      _ImageBubble(
+        imageUrl: message,
+      ),
       SizedBox(height: 10),
     ]);
   }
 }
 
 class _ImageBubble extends StatelessWidget {
+  final Message imageUrl;
+
+  const _ImageBubble({required this.imageUrl});
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -32,7 +41,7 @@ class _ImageBubble extends StatelessWidget {
     return ClipRRect(
         borderRadius: BorderRadius.circular(20),
         child: Image.network(
-          'https://yesno.wtf/assets/yes/8-2f93962e2ab24427df8589131da01a4d.gif',
+          imageUrl.gif.toString(),
           width: size.width * 0.7,
           height: 150,
           fit: BoxFit.cover,
